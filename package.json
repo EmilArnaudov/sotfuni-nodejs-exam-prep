@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd src& node index"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/EmilArnaudov/sotfuni-nodejs-exam-prep/issues"
   },
-  "homepage": "https://github.com/EmilArnaudov/sotfuni-nodejs-exam-prep#readme"
+  "homepage": "https://github.com/EmilArnaudov/sotfuni-nodejs-exam-prep#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "express-handlebars": "^6.0.2",
+    "mongoose": "^6.2.0"
+  }
 }
