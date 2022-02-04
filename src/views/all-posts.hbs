@@ -6,7 +6,7 @@
     <title>Catalog Page</title>
 
     <!-- Do not forget to change the path to the css file -->
-    <link href="/public/css/style.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
@@ -26,10 +26,10 @@
 
             <ul class="menu">
                 <li><a href="/">Home</a></li>
-                <li><a href="/post/all">All Posts</a></li>
+                <li><a href="/posts/all">All Posts</a></li>
                 <!-- Logged users -->
-                <li><a href="/post/create">Create Post</a></li>
-                <li><a href="#">Posts of {{email-of-user}}</a></li>
+                <li><a href="/posts/create">Create Post</a></li>
+                <li><a href="/posts/my">Posts of {{email-of-user}}</a></li>
                 <li><a href="/logout">Logout</a></li>
                 <!-- Guest users -->
                 <li><a href="/register">Register</a></li>
