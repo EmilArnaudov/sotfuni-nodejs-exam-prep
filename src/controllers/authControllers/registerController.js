@@ -6,7 +6,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', async (req, res) => {
+    console.log(req.body);
     const { firstName, lastName, email, password, repeatPassword } = req.body;
+    console.log(firstName, lastName, email, password, repeatPassword);
 
     try {
 
@@ -17,7 +19,7 @@ router.post('/', async (req, res) => {
 
         console.log(error.message);
         res.render('register', {error: error.message})
-        
+
     }
 
 })

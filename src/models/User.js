@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -22,10 +23,22 @@ const userSchema = new mongoose.Schema({
     },
 
     myPosts: [{
+        type: mongoose.Types.ObjectId,
         ref: 'Post',
     }]
 })
 
+userSchema.pre('save', function (next) {
+    bcrypt.hash(this.password, 10)
+        .then((hashedPassword) => {
+            this.password = hashedPassword;
+
+            next();
+        })
+})
+
 const User = mongoose.model('User', userSchema);
+
+
 
 module.exports = User;
