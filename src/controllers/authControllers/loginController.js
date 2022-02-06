@@ -3,6 +3,10 @@ const auth = require('../../services/authServices');
 const {TOKEN_COOKIE_NAME} = require('../../constants');
 
 router.get('/', (req, res) => {
+    if (req.user) {
+        return res.redirect('/')
+    }
+
     res.render('login');
 })
 

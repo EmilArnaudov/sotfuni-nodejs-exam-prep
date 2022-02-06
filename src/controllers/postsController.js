@@ -11,10 +11,30 @@ router.get('/all', async (req, res) => {
     res.render('all-posts', {user: req.user, posts});
 });
 
-router.use('/my-posts', isAuthenticated);
-router.use('/create', isAuthenticated);
-router.use('/delete', isAuthenticated);
-router.use('/edit', isAuthenticated);
+router.get('/details/:id', async (req, res) => {
+    let postId = req.params.id;
+    let post = await Post.findOne({_id: postId}).lean();
+    let votersArray = post.votesOnPost.map(x => x.toString());
+    let author = await User.findOne({_id: post.author}).lean();
+    let voters = await User.find({_id: {$in: post.votesOnPost}}).lean();
+    let votersDisplay = voters.map(x => x.email).join(', ')
+
+    if (req.user) {
+        if (post.author.toString() === req.user.id) {
+            req.user.isAuthor = true;
+        }
+    
+    
+        if (votersArray.includes(req.user.id)) {
+            req.user.hasVoted = true;
+        }
+    }
+
+
+    return res.render('details', {user: req.user, post, author, voters: votersDisplay});
+})
+
+router.use(isAuthenticated);
 
 router.get('/edit/:id', async (req, res) => {
     let post = await Post.findOne({_id: req.params.id}).lean();
@@ -22,13 +42,19 @@ router.get('/edit/:id', async (req, res) => {
     return res.render('edit', {post});
 })
 
+router.use('/my-posts', isAuthenticated);
+router.use('/create', isAuthenticated);
+router.use('/delete', isAuthenticated);
+
+
+
 router.post('/edit/:id', async (req, res) => {
     let {title, keyword, location, dateOfCreation, image, description} = req.body;
 
     try {
         let post = await editPost(req.user._id, title, keyword, location, dateOfCreation, image, description)
 
-        return res.redirect('/posts/all');
+        return res.redirect(`/posts/details/${req.params.id}`);
 
     } catch (error) {
         console.log(error);
@@ -43,7 +69,7 @@ router.get('/my-posts', async (req, res) => {
 
 router.get('/delete/:id', async (req, res) => {
     await Post.deleteOne({_id: req.params.id});
-    return res.redirect('/')
+    return res.redirect('/all')
 })
 
 router.get('/create', (req, res) => {
@@ -56,35 +82,13 @@ router.post('/create', async (req, res) => {
     try {
         let post = await createPost(req.user.id, title, keyword, location, dateOfCreation, image, description)
 
-        return res.redirect('/')
+        return res.redirect('/all')
 
     } catch (error) {
         console.log(error);
     }
 })
 
-router.use('/details/:id', isAuthenticated)
-
-router.get('/details/:id', async (req, res) => {
-    let postId = req.params.id;
-    let post = await Post.findOne({_id: postId}).lean();
-    let votersArray = post.votesOnPost.map(x => x.toString());
-    let author = await User.findOne({_id: post.author}).lean();
-    let voters = await User.find({_id: {$in: post.votesOnPost}}).lean();
-    let votersDisplay = voters.map(x => x.email).join(', ')
-
-
-    if (post.author.toString() === req.user.id) {
-        req.user.isAuthor = true;
-    }
-
-
-    if (votersArray.includes(req.user.id)) {
-        req.user.hasVoted = true;
-    }
-
-    return res.render('details', {user: req.user, post, author, voters: votersDisplay});
-})
 
 router.get('/details/:id/vote-up', async (req, res) => {
     try {
