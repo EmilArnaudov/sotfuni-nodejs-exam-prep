@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
         res.clearCookie(TOKEN_COOKIE_NAME);
     }
     
-    return res.redirect('/login');
+    return res.redirect('/');
 })
 
 module.exports = router;

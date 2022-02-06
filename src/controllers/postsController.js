@@ -1,7 +1,10 @@
 const router = require('express').Router();
+const Post = require('../models/Post');
 
-router.get('/all', (req, res) => {
-    res.render('all-posts');
+router.get('/all', async (req, res) => {
+    let posts = await Post.find({}).lean();
+
+    res.render('all-posts', {posts});
 });
 
 router.get('/my', (req, res) => {
@@ -12,8 +15,13 @@ router.get('/create', (req, res) => {
     res.render('create');
 })
 
-router.get('/details/:id', (req, res) => {
-    res.render('details');
+router.get('/:id', async (req, res) => {
+    let postId = req.params.id;
+    let post = await Post.findOne({_id: postId});
+
+
+
+    res.render('details', {user: req.user, post});
 })
 
 module.exports = router;

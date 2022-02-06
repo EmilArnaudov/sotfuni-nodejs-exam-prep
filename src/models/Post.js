@@ -30,6 +30,7 @@ const postSchema = new mongoose.Schema({
         ref: 'User',
     },
     votesOnPost: [{
+        type: mongoose.Types.ObjectId,
         ref: 'User'
     }],
     ratingOfPost: {
@@ -37,3 +38,7 @@ const postSchema = new mongoose.Schema({
         default: 0,
     },
 })
+
+const Post = mongoose.model('Post', postSchema);
+
+module.exports = Post;
