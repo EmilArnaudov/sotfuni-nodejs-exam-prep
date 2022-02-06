@@ -57,7 +57,9 @@ router.post('/edit/:id', async (req, res) => {
         return res.redirect(`/posts/details/${req.params.id}`);
 
     } catch (error) {
-        res.render(`/edit/${req.params.id}`, {error})
+        let post = await Post.findOne({_id: req.params.id}).lean();
+
+        return res.render('edit', {post, error});
     }
 })
 

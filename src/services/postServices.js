@@ -7,7 +7,7 @@ async function createPost(author, title, keyword, location, dateOfCreation, imag
 }
 
 async function editPost(author, title, keyword, location, dateOfCreation, image, description) {
-    let post = await Post.updateMany({author: author}, {title: title, keyword: keyword, location: location, dateOfCreation: dateOfCreation, image: image, description: description, author: author});
+    let post = await Post.updateMany({author: author}, {title: title, keyword: keyword, location: location, dateOfCreation: dateOfCreation, image: image, description: description, author: author}, {runValidators: true});
 
     return post;
 }
