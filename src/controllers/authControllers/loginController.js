@@ -14,6 +14,10 @@ router.post('/', async (req, res) => {
     const {email, password} = req.body;
 
     try {
+        if (!email && !password) {
+            throw new Error('Username or password incorrect.')
+        }
+
         let user = await auth.login(email, password);
         let token = await auth.createToken(user);
 

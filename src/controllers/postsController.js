@@ -57,7 +57,7 @@ router.post('/edit/:id', async (req, res) => {
         return res.redirect(`/posts/details/${req.params.id}`);
 
     } catch (error) {
-        console.log(error);
+        res.render(`/edit/${req.params.id}`, {error})
     }
 })
 
@@ -86,6 +86,7 @@ router.post('/create', async (req, res) => {
 
     } catch (error) {
         console.log(error);
+       return res.render('create', {user: req.user, error});
     }
 })
 
