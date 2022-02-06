@@ -1,11 +1,15 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
+const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const path = require('path');
+const { authenticate } = require('../middleware/authMIddleware');
 
 const app = express();
 
 app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use(authenticate);
 
 app.engine('hbs', engine({
     extname: 'hbs',

@@ -1,8 +1,8 @@
 const { PORT } = require('./constants')
 const { DB_STRING } = require('./constants');
+const mongoose = require('mongoose');
 
 const app = require('./config/express');
-const mongoose = require('mongoose');
 
 mongoose.connect(DB_STRING)
     .then(() => {

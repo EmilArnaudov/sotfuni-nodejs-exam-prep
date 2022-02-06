@@ -10,12 +10,12 @@ async function register(firstName, lastName, email, password, repeatPassword) {
 
     let user = new User({firstName, lastName, email, password});
 
-    await user.save()
+    return user.save()
 }
 
 async function login(email, password) {
     let hashedPassword = await bcrypt.hash(password, 10);
-    let user = User.find({email: email, password: hashedPassword});
+    let user = await User.find({email: email, password: hashedPassword});
 
     if (!user) {
         throw new Error('Email or password incorrect.')
