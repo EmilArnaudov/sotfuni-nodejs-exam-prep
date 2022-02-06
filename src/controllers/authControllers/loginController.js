@@ -11,6 +11,7 @@ router.post('/', async (req, res) => {
 
     try {
         let user = await auth.login(email, password);
+
         let token = await auth.createToken(user);
 
         res.cookie(constants.TOKEN_COOKIE_NAME, token, {
@@ -20,7 +21,7 @@ router.post('/', async (req, res) => {
         return res.redirect('/');
         
     } catch (error) {
-        console.log(error.message);
+        return res.render('login', {error: error.message})
     }
 })
 

@@ -5,7 +5,7 @@ const { jwtVerify } = require('../utils/jwtUtils');
 
 async function authenticate(req, res, next) {
     let token = req.cookies[TOKEN_COOKIE_NAME];
-    console.log(token);
+
     if (!token) {
         return next();
     }

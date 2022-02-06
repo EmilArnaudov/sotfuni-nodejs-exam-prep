@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const constants = require('../constants');
+const {SECRET} = require('../constants');
 const { jwtSign } = require('../utils/jwtUtils');
 
 async function register(firstName, lastName, email, password, repeatPassword) {
@@ -14,23 +14,25 @@ async function register(firstName, lastName, email, password, repeatPassword) {
 }
 
 async function login(email, password) {
-    let hashedPassword = await bcrypt.hash(password, 10);
-    let user = await User.find({email: email, password: hashedPassword});
+    let user = await User.findOne({email: email}).lean();
 
-    if (!user) {
+    let passwordCorrect = await bcrypt.compare(password, user.password);
+
+    if (passwordCorrect) {
+        return user;
+    } else {
         throw new Error('Email or password incorrect.')
     }
-    
-    return user;
+
 }
 
 async function createToken(user) {
     let payload = {
-        _id: user._id,
+        id: user._id,
         email: user.email,
     }
 
-    return jwtSign(payload, constants.SECRET);
+    return jwtSign(payload, SECRET);
 } 
 
 module.exports = {

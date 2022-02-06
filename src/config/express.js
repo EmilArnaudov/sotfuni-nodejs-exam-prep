@@ -3,7 +3,7 @@ const { engine } = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const routes = require('./routes');
 const path = require('path');
-const { authenticate } = require('../middleware/authMIddleware');
+const { authenticate } = require('../middleware/authMiddleware');
 
 const app = express();
 
