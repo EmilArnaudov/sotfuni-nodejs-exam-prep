@@ -6,7 +6,14 @@ async function createPost(author, title, keyword, location, dateOfCreation, imag
     return post.save();
 }
 
+async function editPost(author, title, keyword, location, dateOfCreation, image, description) {
+    let post = await Post.updateMany({author: author}, {title: title, keyword: keyword, location: location, dateOfCreation: dateOfCreation, image: image, description: description, author: author});
+
+    return post;
+}
+
 
 module.exports = {
     createPost,
+    editPost
 }
