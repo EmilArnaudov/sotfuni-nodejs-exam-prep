@@ -6,7 +6,7 @@
     <title>Details Page</title>
 
     <!-- Do not forget to change the path to the css file -->
-    <link href="/public/css/style.css" type="text/css" rel="stylesheet">
+    <link href="/css/style.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
@@ -31,7 +31,7 @@
                 <!-- Logged users -->
                 {{#if user}}
                     <li><a href="/posts/create">Create Post</a></li>
-                    <li><a href="/posts/my">Posts of {{user.email}}</a></li>
+                    <li><a href="/posts/my-posts">Posts of {{user.email}}</a></li>
                     <li><a href="/logout">Logout</a></li>
                 {{else}}
                     <!-- Guest users -->
@@ -51,7 +51,7 @@
                     <div class="card_left">
                         <div class="card_datails">
                             <h1>Title: {{post.title}}</h1>
-                            <h3>Created by an author: {{post.author}}</h3>
+                            <h3>Created by an author: {{user.firstName}} {{user.lastName}}</h3>
                             <div class="card_animal">
                                 <p class="card-keyword">Keyword: {{post.keyword}}</p>
                                 <p class="card-location">Location: {{post.location}}</p>
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                     <div class="card_right">
-                        <img src="/img/animal.jpg" alt="image">
+                        <img src="{{post.image}}" alt="image">
                     </div>
                 </div>
 

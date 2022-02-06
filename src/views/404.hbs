@@ -31,7 +31,7 @@
                 <!-- Logged users -->
                 {{#if user}}
                     <li><a href="/posts/create">Create Post</a></li>
-                    <li><a href="/posts/my">Posts of {{user.email}}</a></li>
+                    <li><a href="/posts/my-posts">Posts of {{user.email}}</a></li>
                     <li><a href="/logout">Logout</a></li>
                 {{else}}
                     <!-- Guest users -->
@@ -52,7 +52,7 @@
                     <span class="error-num">4</span>
 
                     <p class="sub-text">Something went wrong. We're <span class="italic">looking</span> to see what happened.</p>
-                    <p>Go Back to <a href="#">Home</a></p>
+                    <p>Go Back to <a href="/">Home</a></p>
                 </div>
             </div>
         </main>

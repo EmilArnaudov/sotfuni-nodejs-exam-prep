@@ -29,6 +29,8 @@ async function login(email, password) {
 async function createToken(user) {
     let payload = {
         id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
     }
 

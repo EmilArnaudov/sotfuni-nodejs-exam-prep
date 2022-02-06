@@ -11,4 +11,8 @@ router.use('/register', registerController);
 router.use('/logout', logoutController);
 router.use('/posts', postController);
 
+router.use('/*', (req, res) => {{
+    return res.status('404').render('404');
+}})
+
 module.exports = router;
