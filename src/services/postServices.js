@@ -12,8 +12,17 @@ async function editPost(author, title, keyword, location, dateOfCreation, image,
     return post;
 }
 
+function upvotePost(postId, userId) {
+    return Post.findOneAndUpdate({_id: postId}, {$push: {votesOnPost: userId}, $inc: {ratingOfPost: 1}});
+}
+
+function downvotePost(postId, userId) {
+    return Post.findOneAndUpdate({_id: postId}, {$push: {votesOnPost: userId}, $inc: {ratingOfPost: -1}});
+}
 
 module.exports = {
     createPost,
-    editPost
+    editPost,
+    upvotePost,
+    downvotePost,
 }
