@@ -71,20 +71,19 @@ router.get('/details/:id', async (req, res) => {
     let votersArray = post.votesOnPost.map(x => x.toString());
     let author = await User.findOne({_id: post.author}).lean();
     let voters = await User.find({_id: {$in: post.votesOnPost}}).lean();
+    let votersDisplay = voters.map(x => x.email).join(', ')
 
 
     if (post.author.toString() === req.user.id) {
         req.user.isAuthor = true;
     }
 
-    console.log(post.votesOnPost);
 
     if (votersArray.includes(req.user.id)) {
         req.user.hasVoted = true;
     }
 
-
-    return res.render('details', {user: req.user, post, author, voters});
+    return res.render('details', {user: req.user, post, author, voters: votersDisplay});
 })
 
 router.get('/details/:id/vote-up', async (req, res) => {
