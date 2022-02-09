@@ -64,8 +64,11 @@ router.post('/edit/:id', async (req, res) => {
 })
 
 router.get('/my-posts', async (req, res) => {
-    let myPosts = await Post.find({author: req.user._id}).lean();
-
+    let myPosts = await Post.find({author: req.user.id}).lean();
+    myPosts.forEach(x => {
+        x.firstName = req.user.firstName;
+        x.lastName = req.user.lastName;
+    })
     res.render('my-posts', {user: req.user, myPosts});
 });
 
